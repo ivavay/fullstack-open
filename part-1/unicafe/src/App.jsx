@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { useState } from "react";
+
+import Statistics from "./Statistics";
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const all = good + neutral + bad
-  const average = all === 0 ? 0 : (good - bad) / all
-  const positive = all === 0 ? 0 : (good / all) * 100
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  const all = good + neutral + bad;
+  const average = all === 0 ? 0 : (good - bad) / all;
+  const positive = all === 0 ? 0 : (good / all) * 100;
 
   return (
     <div>
@@ -16,14 +18,15 @@ const App = () => {
       <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
       <button onClick={() => setBad(bad + 1)}>bad</button>
 
-      <h1>statistics</h1>
-      <div>good {good}</div>
-      <div>neutral {neutral}</div>
-      <div>bad {bad}</div>
-      <div>average {average}</div>
-      <div>positive {positive} %</div>
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        average={average}
+        positive={positive}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

@@ -22,6 +22,7 @@ const App = () => {
         good={good}
         neutral={neutral}
         bad={bad}
+        all={all}
         average={average}
         positive={positive}
       />

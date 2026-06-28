@@ -59,3 +59,6 @@ const totalExercises = course.parts.reduce(
   0
 );
 ```
+This review reinforces the concept of props drilling, which is ok for small appllications. 
+
+

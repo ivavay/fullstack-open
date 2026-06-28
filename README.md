@@ -61,4 +61,20 @@ const totalExercises = course.parts.reduce(
 ```
 This review reinforces the concept of props drilling, which is ok for small appllications. 
 
+#### Phonebook
 
+What I build:
+
+What I learned/refreshed: 
+
+- `event.preventDefault()` to a form is to prevent page refresh when you submit, which is the default behavior. 
+- A some array method is used to check if the name already exists in the persons array; returns true if it does. 
+```js
+    const exists = persons.some((person) => person.name === trimmedName);
+```
+- Using the filter array method, only the people whose name includes the filter text (case insensitive, meaning all changed to lowercase) will be stored to filteredPersons 
+```js 
+const filteredPersons = persons.filter((person) =>
+    person.name.toLowerCase().includes(filter.toLowerCase())
+  );
+```

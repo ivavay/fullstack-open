@@ -42,3 +42,20 @@ What I learned/refreshed:
 ```js 
 const copy = [...numbers]
 ```
+
+## Part 2: Communicating with Server 
+#### Course Info (extended)
+
+What I build: 
+
+- Refactored to use child components
+
+What I learned/refreshed:
+
+Reduce is an array method where you take the starting sum at 0 and adding each part to the total sum.
+```js 
+const totalExercises = course.parts.reduce(
+  (sum, part) => sum + part.exercises,
+  0
+);
+```

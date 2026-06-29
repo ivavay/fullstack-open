@@ -9,10 +9,21 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     personsService.getAll().then((data) => setPersons(data));
   }, []);
+
+  useEffect(() => {
+    if (!notification) return;
+
+    const timer = setTimeout(() => {
+      setNotification(null);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [notification]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,6 +55,7 @@ const App = () => {
             );
             setNewName("");
             setNewNumber("");
+            setNotification(`Changed ${trimmedName}`);
           });
       }
       return;
@@ -53,6 +65,7 @@ const App = () => {
       setPersons([...persons, data]);
       setNewName("");
       setNewNumber("");
+      setNotification(`Added ${trimmedName}`);
     });
   };
 
@@ -73,6 +86,20 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter filter={filter} onChange={setFilter} />
       <h2>add a new</h2>
+      {notification && (
+        <div
+          style={{
+            backgroundColor: "#e5e7eb",
+            color: "#166534",
+            padding: "10px 12px",
+            borderRadius: "6px",
+            marginBottom: "12px",
+            display: "inline-block",
+          }}
+        >
+          {notification}
+        </div>
+      )}
       <PersonForm
         newName={newName}
         setNewName={setNewName}

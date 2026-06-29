@@ -12,10 +12,18 @@ const create = (newObject) => {
   }).then((response) => response.json());
 };
 
+const update = (id, updatedObject) => {
+  return fetch(`${baseUrl}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedObject),
+  }).then((response) => response.json());
+};
+
 const remove = (id) => {
   return fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
   });
 };
 
-export default { getAll, create, remove };
+export default { getAll, create, update, remove };

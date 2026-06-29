@@ -91,3 +91,4 @@ const filteredPersons = persons.filter((person) =>
     }
   };
   ```
+- In the network tab, the API name shows the last part of the endpoint (the ID in this case)

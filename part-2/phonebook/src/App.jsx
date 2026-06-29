@@ -38,6 +38,14 @@ const App = () => {
     });
   };
 
+  const handleDelete = (person) => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personsService.remove(person.id).then(() => {
+        setPersons(persons.filter((p) => p.id !== person.id));
+      });
+    }
+  };
+
   const filteredPersons = persons.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase()),
   );
@@ -53,7 +61,7 @@ const App = () => {
         setNewNumber={setNewNumber}
         onSubmit={handleSubmit}
       />
-      <PersonList persons={filteredPersons} />
+      <PersonList persons={filteredPersons} onDelete={handleDelete} />
     </div>
   );
 };

@@ -12,4 +12,10 @@ const create = (newObject) => {
   }).then((response) => response.json());
 };
 
-export default { getAll, create };
+const remove = (id) => {
+  return fetch(`${baseUrl}/${id}`, {
+    method: "DELETE",
+  });
+};
+
+export default { getAll, create, remove };

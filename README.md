@@ -81,3 +81,13 @@ const filteredPersons = persons.filter((person) =>
 ```
 - json-server serves as fake API for you to simulate fetching from an API. All you need is a db.json file at the root. Also, it can generate unique IDs for you 
 - It is good practice to extract code relating to communication with backend to a separate module in a folder called services so can reuse API logic if there are more API actions that need to be made later
+- Filter can also be used here to update the state `persons` without the deleted person. 
+```js
+ const handleDelete = (person) => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personsService.remove(person.id).then(() => {
+        setPersons(persons.filter((p) => p.id !== person.id));
+      });
+    }
+  };
+  ```

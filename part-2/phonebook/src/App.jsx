@@ -55,7 +55,19 @@ const App = () => {
             );
             setNewName("");
             setNewNumber("");
-            setNotification(`Changed ${trimmedName}`);
+            setNotification({
+              message: `Changed ${trimmedName}`,
+              type: "success",
+            });
+          })
+          .catch(() => {
+            setNotification({
+              message: `Information of ${trimmedName} has already been removed from server`,
+              type: "error",
+            });
+            setPersons(persons.filter((person) => person.id !== existingPerson.id));
+            setNewName("");
+            setNewNumber("");
           });
       }
       return;
@@ -65,13 +77,26 @@ const App = () => {
       setPersons([...persons, data]);
       setNewName("");
       setNewNumber("");
-      setNotification(`Added ${trimmedName}`);
+      setNotification({
+        message: `Added ${trimmedName}`,
+        type: "success",
+      });
     });
   };
 
   const handleDelete = (person) => {
     if (window.confirm(`Delete ${person.name}?`)) {
       personsService.remove(person.id).then(() => {
+        setPersons(persons.filter((p) => p.id !== person.id));
+        setNotification({
+          message: `Deleted ${person.name}`,
+          type: "success",
+        });
+      }).catch(() => {
+        setNotification({
+          message: `Information of ${person.name} has already been removed from server`,
+          type: "error",
+        });
         setPersons(persons.filter((p) => p.id !== person.id));
       });
     }
@@ -90,14 +115,17 @@ const App = () => {
         <div
           style={{
             backgroundColor: "#e5e7eb",
-            color: "#166534",
+            color: notification.type === "error" ? "#991b1b" : "#166534",
+            border: `2px solid ${
+              notification.type === "error" ? "#991b1b" : "#166534"
+            }`,
             padding: "10px 12px",
             borderRadius: "6px",
             marginBottom: "12px",
             display: "inline-block",
           }}
         >
-          {notification}
+          {notification.message}
         </div>
       )}
       <PersonForm

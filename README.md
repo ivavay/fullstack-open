@@ -92,3 +92,4 @@ const filteredPersons = persons.filter((person) =>
   };
   ```
 - In the network tab, the API name shows the last part of the endpoint (the ID in this case)
+- Can use promise chaining `.then` when the logic just does one thing, such as updating state. When there are multi steps, use async/await. Await waits for the API to be fetched before doing sequential actions. 

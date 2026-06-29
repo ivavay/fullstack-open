@@ -1,7 +1,15 @@
 const baseUrl = "http://localhost:3001/persons";
 
+const handleResponse = (response) => {
+  if (!response.ok) {
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
+  return response.json();
+};
+
 const getAll = () => {
-  return fetch(baseUrl).then((response) => response.json());
+  return fetch(baseUrl).then(handleResponse);
 };
 
 const create = (newObject) => {
@@ -9,7 +17,7 @@ const create = (newObject) => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newObject),
-  }).then((response) => response.json());
+  }).then(handleResponse);
 };
 
 const update = (id, updatedObject) => {
@@ -17,12 +25,16 @@ const update = (id, updatedObject) => {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updatedObject),
-  }).then((response) => response.json());
+  }).then(handleResponse);
 };
 
 const remove = (id) => {
   return fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
   });
 };
 

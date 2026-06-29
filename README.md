@@ -64,6 +64,7 @@ This review reinforces the concept of props drilling, which is ok for small appl
 #### Phonebook
 
 What I build:
+- A simple phonebook where you can add person and person's number via form inputs and there's a search filter to search for the persons you're looking for.
 
 What I learned/refreshed: 
 
@@ -78,3 +79,5 @@ const filteredPersons = persons.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase())
   );
 ```
+- json-server serves as fake API for you to simulate fetching from an API. All you need is a db.json file at the root. Also, it can generate unique IDs for you 
+- It is good practice to extract code relating to communication with backend to a separate module in a folder called services so can reuse API logic if there are more API actions that need to be made later

@@ -93,3 +93,28 @@ const filteredPersons = persons.filter((person) =>
   ```
 - In the network tab, the API name shows the last part of the endpoint (the ID in this case)
 - Can use promise chaining `.then` when the logic just does one thing, such as updating state. When there are multi steps, use async/await. Await waits for the API to be fetched before doing sequential actions. 
+
+## Part 2: Programming a server with NodeJS and Express
+
+#### Phonebook Backend 
+- Express is a cleaner and abstracted framework to build APIs, an offshoot of node JS
+- For example, this gets all persons from the server
+```js
+app.get('/api/persons/:id', (request, response) => {
+  const person = persons.find(p => p.id === request.params.id)
+
+    if (person) {
+    response.json(person)
+  } else {
+    response.status(404).end()
+  }
+ 
+})
+```
+- Learned to return a 400 status code if person already exists in phonebook, by using some to check against the name. 400 means server cannot process the request. 
+```js
+ if (persons.some(p => p.name === body.name)) {
+    return response.status(400).json({ error: 'name must be unique' })
+  }
+```
+- Can use `"dev": "node --watch index.js",` insude of `scripts` inside of `package.json` to restart server whenever new changes are saved. Use `npm run dev` to start the development server

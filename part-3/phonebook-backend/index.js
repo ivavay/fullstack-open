@@ -1,4 +1,5 @@
-const http = require('http')
+const express = require('express')
+const app = express()
 
 let persons = [
     { 
@@ -23,24 +24,29 @@ let persons = [
     }
 ]
 
-// For exercise 3.1
-const app = http.createServer((request, response) => {
-  if (request.url === '/api/persons') {
-    response.writeHead(200, { 'Content-Type': 'application/json' })
-    response.end(JSON.stringify(persons))
-    return
-  }
+// Get all persons (exercise 3.1)
+app.get('/api/persons', (request, response) => {
+  response.json(persons)
+})
 
-  // For exercise 3.2
-  if (request.url === '/info') {
-    const date = new Date()
-    const info = `<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`
-    response.writeHead(200, { 'Content-Type': 'text/html' })
-    response.end(info)
-    return
+// Get single person by ID (exercise 3.3)
+app.get('/api/persons/:id', (request, response) => {
+  const person = persons.find(p => p.id === request.params.id)
+
+    if (person) {
+    response.json(person)
+  } else {
+    response.status(404).end()
   }
-  response.writeHead(404, { 'Content-Type': 'application/json' })
-  response.end(JSON.stringify({ error: 'Not found' }))
+ 
+})
+
+// Info (includes timestamp of request) (exercise 3.2)
+app.get('/info', (request, response) => {
+  const info = `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`
+  response.send(info)
+
+  
 })
 
 const PORT = 3001

@@ -6,7 +6,7 @@ Notes, exercises, and mini projects from the Full Stack Open course. Part 0 and 
 
 - [x] Part 0: Fundamentals of Web Apps (sometimes in 2023...)
 - [x] Part 1: Introduction to React (6/27)
-- [ ] Part 2: Communicating with Server
+- [x] Part 2: Communicating with Server (6/29)
 - [ ] Part 3: Programming a server with NodeJS and Express
 
 ## Part 1: Introduction to React

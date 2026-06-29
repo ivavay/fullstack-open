@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
     { 
       "id": "1",
@@ -29,6 +31,33 @@ app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
 
+// Add a new person (exercise 3.5 + 3.6)
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  if (!body.name) {
+    return response.status(400).json({ error: 'name is missing' })
+  }
+
+  if (!body.number) {
+    return response.status(400).json({ error: 'number is missing' })
+  }
+
+  // If name already exists in the phonebook 
+  if (persons.some(p => p.name === body.name)) {
+    return response.status(400).json({ error: 'name must be unique' })
+  }
+
+  const newPerson = {
+    id: String(Math.floor(Math.random() * 1000000)),
+    name: body.name,
+    number: body.number
+  }
+
+  persons = persons.concat(newPerson)
+  response.json(newPerson)
+})
+
 // Get single person by ID (exercise 3.3)
 app.get('/api/persons/:id', (request, response) => {
   const person = persons.find(p => p.id === request.params.id)
@@ -39,6 +68,19 @@ app.get('/api/persons/:id', (request, response) => {
     response.status(404).end()
   }
  
+})
+
+// Delete a person by ID (exercise 3.4)
+app.delete('/api/persons/:id', (request, response) => {
+  const id = request.params.id
+  const index = persons.findIndex(p => p.id === id)
+
+  if (index !== -1) {
+    persons.splice(index, 1)
+    response.status(204).end()
+  } else {
+    response.status(404).end()
+  }
 })
 
 // Info (includes timestamp of request) (exercise 3.2)

@@ -23,6 +23,7 @@ let persons = [
     }
 ]
 
+// For exercise 3.1
 const app = http.createServer((request, response) => {
   if (request.url === '/api/persons') {
     response.writeHead(200, { 'Content-Type': 'application/json' })
@@ -30,6 +31,14 @@ const app = http.createServer((request, response) => {
     return
   }
 
+  // For exercise 3.2
+  if (request.url === '/info') {
+    const date = new Date()
+    const info = `<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`
+    response.writeHead(200, { 'Content-Type': 'text/html' })
+    response.end(info)
+    return
+  }
   response.writeHead(404, { 'Content-Type': 'application/json' })
   response.end(JSON.stringify({ error: 'Not found' }))
 })

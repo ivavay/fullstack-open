@@ -72,6 +72,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Filter filter={filter} onChange={setFilter} />
+      <h2>add a new</h2>
       <PersonForm
         newName={newName}
         setNewName={setNewName}

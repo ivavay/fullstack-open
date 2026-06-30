@@ -137,8 +137,10 @@ POST /api/persons 200 54 - 16.207 ms {"name":"Test Person","number":"123-456"}
 const cors = require('cors')
 app.use(cors())
 ```
+- A proxy can be used to achieve the same thing if you are working with backend APIs that don't belong to you
 Deployed phonebook's backend and frontend together on Render: [link](https://fullstack-open-phonebook-8sa1.onrender.com/)
 - MongoDB is a document, noSQL database, and in a way "schemaless"
-- Mongoose is a library that connects node/expres code to mongoDB
+- Mongoose is a library that connects node/express code to mongoDB
 - A cluster on mongoDB is a group servers to make your storage work 
 - See data stored in browser collections -> cluster -> test 
+- To serve up the data stored in MongoDB onto the frontend, can use a Moongoose model (JS object) to talk to the MongoDB collection. Must store MongoDB URI as an env variable. 

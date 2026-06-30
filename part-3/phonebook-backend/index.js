@@ -1,6 +1,20 @@
 const express = require('express')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
+const Person = require('./models/person')
 const app = express()
+
+require('dotenv').config()
+
+const url = process.env.MONGODB_URI
+
+if (!url) {
+  console.log('MONGODB_URI is missing')
+  process.exit(1)
+}
+
+mongoose.set('strictQuery', false)
+mongoose.connect(url)
 
 app.use(express.json())
 app.use(express.static('dist'))
@@ -39,7 +53,9 @@ let persons = [
 
 // Get all persons (exercise 3.1)
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  Person.find({}).then(persons => {
+    response.json(persons)
+  })
 })
 
 // Add a new person (exercise 3.5 + 3.6)

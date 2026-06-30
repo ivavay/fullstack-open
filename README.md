@@ -138,3 +138,7 @@ const cors = require('cors')
 app.use(cors())
 ```
 Deployed phonebook's backend and frontend together on Render: [link](https://fullstack-open-phonebook-8sa1.onrender.com/)
+- MongoDB is a document, noSQL database, and in a way "schemaless"
+- Mongoose is a library that connects node/expres code to mongoDB
+- A cluster on mongoDB is a group servers to make your storage work 
+- See data stored in browser collections -> cluster -> test 

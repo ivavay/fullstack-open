@@ -137,3 +137,4 @@ POST /api/persons 200 54 - 16.207 ms {"name":"Test Person","number":"123-456"}
 const cors = require('cors')
 app.use(cors())
 ```
+Deployed phonebook's backend and frontend together on Render: [link](https://fullstack-open-phonebook-8sa1.onrender.com/)

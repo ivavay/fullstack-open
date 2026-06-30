@@ -117,4 +117,23 @@ app.get('/api/persons/:id', (request, response) => {
     return response.status(400).json({ error: 'name must be unique' })
   }
 ```
-- Can use `"dev": "node --watch index.js",` insude of `scripts` inside of `package.json` to restart server whenever new changes are saved. Use `npm run dev` to start the development server
+- Can use `"dev": "node --watch index.js",` inside of `scripts` inside of `package.json` to restart server whenever new changes are saved. Use `npm run dev` to start the development server
+- A middleware like `morgan` can be used to give info (url called, status, how long it took to respond, post data the server received) all in the terminal from a backend POV without the browser devtool. 
+- The code is like this, with the custom "token" that gives you the body of the request.
+```js
+morgan.token('body', (request) => {
+  return request.method === 'POST' ? JSON.stringify(request.body) : ''
+})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+```
+- It would return something like this after restarting the server
+```js
+Server running on port 3001
+POST /api/persons 200 54 - 16.207 ms {"name":"Test Person","number":"123-456"}
+```
+- Same-Origin Policy is a safety mechanism that enforces requests only from the same origin, so if front is on one port and the backend on another, there would be an error...unless you install and use the middleware `cors`, like this: 
+```js
+// Middlewares 
+const cors = require('cors')
+app.use(cors())
+```

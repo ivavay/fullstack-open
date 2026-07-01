@@ -144,3 +144,4 @@ Deployed phonebook's backend and frontend together on Render: [link](https://ful
 - A cluster on mongoDB is a group servers to make your storage work 
 - See data stored in browser collections -> cluster -> test 
 - To serve up the data stored in MongoDB onto the frontend, can use a Moongoose model (JS object) to talk to the MongoDB collection. Must store MongoDB URI as an env variable. 
+- A 204 (No content) status is returned if a person is deleted via DELETE method

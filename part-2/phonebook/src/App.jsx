@@ -60,12 +60,19 @@ const App = () => {
               type: "success",
             });
           })
-          .catch(() => {
+          .catch((error) => {
             setNotification({
-              message: `Information of ${trimmedName} has already been removed from server`,
+              message:
+                error.status === 404
+                  ? `Information of ${trimmedName} has already been removed from server`
+                  : error.message,
               type: "error",
             });
-            setPersons(persons.filter((person) => person.id !== existingPerson.id));
+            if (error.status === 404) {
+              setPersons(
+                persons.filter((person) => person.id !== existingPerson.id),
+              );
+            }
             setNewName("");
             setNewNumber("");
           });
@@ -73,15 +80,23 @@ const App = () => {
       return;
     }
 
-    personsService.create(newPerson).then((data) => {
-      setPersons([...persons, data]);
-      setNewName("");
-      setNewNumber("");
-      setNotification({
-        message: `Added ${trimmedName}`,
-        type: "success",
+    personsService
+      .create(newPerson)
+      .then((data) => {
+        setPersons([...persons, data]);
+        setNewName("");
+        setNewNumber("");
+        setNotification({
+          message: `Added ${trimmedName}`,
+          type: "success",
+        });
+      })
+      .catch((error) => {
+        setNotification({
+          message: error.message,
+          type: "error",
+        });
       });
-    });
   };
 
   const handleDelete = (person) => {

@@ -145,3 +145,4 @@ Deployed phonebook's backend and frontend together on Render: [link](https://ful
 - To serve up the data stored in MongoDB onto the frontend, can use a Moongoose model (JS object) to talk to the MongoDB collection. Must store MongoDB URI as an env variable. 
 - A 204 (No content) status is returned if a person is deleted via DELETE method
 - An error handling express middleware centralizes the route logic and can let you specify the error message to make it look more user-friendly
+- Validation should be done both on frontend and backend. For backend, can write custom validation with Mongoose. 

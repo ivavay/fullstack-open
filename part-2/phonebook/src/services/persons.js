@@ -2,7 +2,17 @@ const baseUrl = "/api/persons";
 
 const handleResponse = (response) => {
   if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}`);
+    return response.text().then((text) => {
+      const error = text ? JSON.parse(text) : {};
+      const message = error.error || `Request failed with status ${response.status}`;
+      const requestError = new Error(message);
+      requestError.status = response.status;
+      throw requestError;
+    });
+  }
+
+  if (response.status === 204) {
+    return undefined;
   }
 
   return response.json();
@@ -31,11 +41,7 @@ const update = (id, updatedObject) => {
 const remove = (id) => {
   return fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
-    }
-  });
+  }).then(handleResponse);
 };
 
 export default { getAll, create, update, remove };

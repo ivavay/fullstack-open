@@ -15,6 +15,12 @@ if (!url) {
 
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
+  .then(() => {
+    console.log(`connected to MongoDB database ${mongoose.connection.name}`)
+  })
+  .catch(error => {
+    console.log('error connecting to MongoDB:', error.message)
+  })
 
 app.use(express.json())
 app.use(express.static('dist'))
@@ -55,11 +61,14 @@ let persons = [
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(persons => {
     response.json(persons)
+  }).catch(error => {
+    console.log(error.message)
+    response.status(500).json({ error: 'database error' })
   })
 })
 
 // Add a new person (exercise 3.5 + 3.6)
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', async (request, response) => {
   const body = request.body
 
   if (!body.name) {
@@ -70,19 +79,24 @@ app.post('/api/persons', (request, response) => {
     return response.status(400).json({ error: 'number is missing' })
   }
 
-  // If name already exists in the phonebook 
-  if (persons.some(p => p.name === body.name)) {
-    return response.status(400).json({ error: 'name must be unique' })
-  }
+  try {
+    // const existingPerson = await Person.findOne({ name: body.name })
 
-  const newPerson = {
-    id: String(Math.floor(Math.random() * 1000000)),
-    name: body.name,
-    number: body.number
-  }
+    // if (existingPerson) {
+    //   return response.status(400).json({ error: 'name must be unique' })
+    // }
 
-  persons = persons.concat(newPerson)
-  response.json(newPerson)
+    const person = new Person({
+      name: body.name,
+      number: body.number
+    })
+
+    const savedPerson = await person.save()
+    response.json(savedPerson)
+  } catch (error) {
+    console.log(error.message)
+    response.status(500).json({ error: 'database error' })
+  }
 })
 
 // Get single person by ID (exercise 3.3)
